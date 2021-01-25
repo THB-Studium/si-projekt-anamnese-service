@@ -115,6 +115,7 @@ public class SystemInit {
                 AllergyValues.FRUCTOSE.toString()
         };
 
+
         for (String name : allergiesNames) {
             if (allergyRepository.findByName(name) == null) {
                 allergyRepository.saveAndFlush(new Allergy(null, name.toLowerCase()));
