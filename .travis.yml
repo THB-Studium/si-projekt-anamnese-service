@@ -21,7 +21,7 @@ deploy:
     skip_cleanup: true
     on:
       branch: master
-      repo: "SI-Projekt/SI-Projekt-Anamnese-Service"
+      repo: "SI-Projekt-2/si-projekt-anamnese-service"
     bucket: si-project-backend-deployment
     region: us-east-1
   - provider: codedeploy
@@ -36,4 +36,4 @@ deploy:
     wait_until_deployed: true
     on:
       branch: master
-      repo: "SI-Projekt/SI-Projekt-Anamnese-Service"
+      repo: "SI-Projekt-2/si-projekt-anamnese-service"
