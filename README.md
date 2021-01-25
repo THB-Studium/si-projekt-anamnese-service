@@ -1,1 +1,1 @@
-# si-projekt-anamnese-web
+# si-projekt-anamnese-service
