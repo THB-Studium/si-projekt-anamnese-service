@@ -1,0 +1,39 @@
+language: java
+os: linux
+jdk:
+  - openjdk8
+cache:
+  directories:
+    - $HOME/.m2
+before_script:
+  - sudo apt-get install -y dos2unix
+script:
+  - "mvn clean verify"
+  - dos2unix scripts/*
+  - zip si-project-build target/si-projekt-anamnese-service-0.0.1-SNAPSHOT.jar appspec.yml scripts/*
+  - mkdir -p dpl_cd_upload
+  - mv si-project-build.zip dpl_cd_upload/si-project-build.zip
+deploy:
+  - provider: s3
+    access_key_id: $AWS_ACCESS_KEY_ID
+    secret_access_key: $AWS_SECRET_ACCESS_KEY
+    local_dir: dpl_cd_upload
+    skip_cleanup: true
+    on:
+      branch: master
+      repo: "SI-Projekt/SI-Projekt-Anamnese-Service"
+    bucket: si-project-backend-deployment
+    region: us-east-1
+  - provider: codedeploy
+    access_key_id: $AWS_ACCESS_KEY_ID
+    secret_access_key: $AWS_SECRET_ACCESS_KEY
+    bucket: si-project-backend-deployment
+    key: si-project-build.zip
+    bundle_type: zip
+    application: si-projekt-anamnese_service
+    deployment_group: si-projekt-deployment_group_name
+    region: us-east-1
+    wait_until_deployed: true
+    on:
+      branch: master
+      repo: "SI-Projekt/SI-Projekt-Anamnese-Service"
